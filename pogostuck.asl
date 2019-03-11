@@ -33,12 +33,14 @@ init
 startup
 {
 	settings.Add("first_banana", true, "First Banana");
-	settings.Add("second_banana", true, "Second Banana");
+	settings.Add("last_banana", true, "Last Banana");
 	settings.Add("big_bone", true, "Big Bone");
 	settings.Add("poes_peak", true, "Poe's Peak");
 	settings.Add("cave", true, "Cave");
 	settings.Add("twin_trees", true, "Twin Trees");
-	settings.Add("cliff_banana", true, "Cliff Banana");
+	settings.Add("cliff_banana", true, "Grapes Cliff");
+	settings.Add("half_grapes", true, "Half Grapes");	
+	settings.Add("tree_branch", true, "Tree Branch");
 
 	settings.Add("egg", true, "Egg");
 }
@@ -47,12 +49,14 @@ reset
 {
 	if(old.is_in_start_zone == 0 && current.is_in_start_zone == 255) {
 		vars.first_banana = 0;
-		vars.second_banana = 0;
+		vars.last_banana = 0;
 		vars.big_bone = 0;
 		vars.poes_peak = 0;
 		vars.cave = 0;
 		vars.twin_trees = 0;
 		vars.cliff_banana = 0;
+		vars.half_grapes = 0;
+		vars.tree_branch = 0;
 
 		vars.egg = 0;
 
@@ -84,23 +88,20 @@ split
 	if (vars.first_banana == 0 && (current.pogo_x > -7623f))
 	{
 		vars.first_banana = 1;
-		print("first_banana: split");
 		return settings["first_banana"];
 	}
 
 	// x: -6091 y: -9304
-	if (vars.second_banana == 0 && (current.pogo_x > -7623f))
+	if (vars.last_banana == 0 && (current.pogo_x > -6091f))
 	{
-		vars.second_banana = 1;
-		print("second_banana: split");
-		return settings["second_banana"];
+		vars.last_banana = 1;
+		return settings["last_banana"];
 	}
 
 	// x: -3270 y: -8678
 	if (vars.big_bone == 0 && (current.pogo_x > -3270f))
 	{
 		vars.big_bone = 1;
-		print("big_bone: split");
 		return settings["big_bone"];
 	}
 
@@ -108,7 +109,6 @@ split
 	if (vars.poes_peak == 0 && (current.pogo_x > -1456f))
 	{
 		vars.poes_peak = 1;
-		print("poes_peak: split");
 		return settings["poes_peak"];
 	}
 
@@ -116,7 +116,6 @@ split
 	if (vars.cave == 0 && (current.pogo_x > 136f))
 	{
 		vars.cave = 1;
-		print("cave: split");
 		return settings["cave"];
 	}
 
@@ -124,16 +123,28 @@ split
 	if (vars.twin_trees == 0 && (current.pogo_x > 1781f))
 	{
 		vars.twin_trees = 1;
-		print("twin_trees: split");
 		return settings["twin_trees"];
 	}
 
-	// x: 5601 y: -4143
-	if (vars.cliff_banana == 0 && (current.pogo_x > 5601))
+	// x: 5373 y: -4550
+	if (vars.cliff_banana == 0 && (current.pogo_x > 5373f) && (current.pogo_y > -4550f))
 	{
 		vars.cliff_banana = 1;
-		print("cliff_banana: split");
 		return settings["cliff_banana"];
+	}
+
+	// x: 3343 y: -3462
+	if (vars.half_grapes == 0 && (current.pogo_x < 3343) && (current.pogo_y > -3462))
+	{
+		vars.half_grapes = 1;
+		return settings["half_grapes"];
+	}
+
+	// x:5596 y:-2342
+	if (vars.tree_branch == 0 && (current.pogo_x > 5596f) && (current.pogo_y > -2342f))
+	{
+		vars.tree_branch = 1;
+		return settings["tree_branch"];
 	}
 }
 
@@ -142,13 +153,15 @@ start
 	current.GameTime = TimeSpan.Zero;
 
 	vars.first_banana = 0;
-	vars.second_banana = 0;
+	vars.last_banana = 0;
 	vars.big_bone = 0;
 	vars.poes_peak = 0;
 	vars.cave = 0;
 	vars.egg = 0;
 	vars.twin_trees = 0;
 	vars.cliff_banana = 0;
+	vars.half_grapes = 0;
+	vars.tree_branch = 0;
 
 	return old.is_in_start_zone == 255 && current.is_in_start_zone == 0;
 }
